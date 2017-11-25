@@ -3,16 +3,18 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"store/controllers"
+	"store/config"
+	"store/routes"
 )
 
 func main() {
-	//Controladores
-	http.HandleFunc("/", controllers.HomeController)
-	http.HandleFunc("/producto/", controllers.ProductoController)
-	http.HandleFunc("/producto/envio/", controllers.ProductoEnvioController)
+	//Inicializamos las rutas
+	routes.Init()
+
+	//Inicializamos la configuracion
+	config.Init()
 
 	//Escuchar servidor
-	fmt.Println("El servidor está corriendo en localhost:8080")
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("El servidor está corriendo en localhost" + config.Config["puerto"])
+	http.ListenAndServe(config.Config["puerto"], routes.Router)
 }
