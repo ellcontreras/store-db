@@ -7,25 +7,32 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// Conexion es el tipo de dato que va a realizar la conexion a una db
 type Conexion struct {
-	dbuser     string
-	dbpassword string
-	dbname     string
+	Dbuser     string
+	Dbpassword string
+	Dbname     string
 }
 
 var (
-	db  *sql.DB
+	// db es la variable en donde almacenaremos nuestra conexion a la db
+	db *sql.DB
+
+	// err es la variable que va a revisar que no haya ningún error
 	err error
 )
 
-func (this *Conexion) AbrirConexion() {
+// AbrirConexion es la funcion que abre una conexion a la db
+func (este *Conexion) AbrirConexion() {
 	db, err = sql.Open("mysql", config.Config["dbuser"]+":"+config.Config["dbpassword"]+"@/"+config.Config["dbname"])
 }
 
-func (this *Conexion) ObtenerConexion() *sql.DB {
+// ObtenerConexion es la funcion que devuelve una conexion a la db
+func (este *Conexion) ObtenerConexion() *sql.DB {
 	return db
 }
 
-func (this *Conexion) CerrarConexion() {
+// CerrarConexion es la funcion que abre una conexion a la db
+func (este *Conexion) CerrarConexion() {
 	db.Close()
 }
